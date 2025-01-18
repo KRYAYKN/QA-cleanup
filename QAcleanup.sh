@@ -58,15 +58,14 @@ git checkout -b temp_revert_branch || { echo "Failed to create temporary branch"
 for branch in $FAILED_BRANCHES; do
     echo "Processing failed branch: $branch"
     
-    # Debug merge commits
+    # Search for merge commits
     echo "Searching for merge commits for $branch..."
-    git log --merges --oneline --grep="$branch"
-
-    # Find merge commits
-    MERGE_COMMITS=$(git log --merges --oneline --grep="Merge pull request.*$branch" --format="%H")
+    MERGE_COMMITS=$(git log --merges --oneline --grep="Merge pull request.*from.*$branch" --format="%H")
+    
     if [[ -n "$MERGE_COMMITS" ]]; then
         echo "Found merge commits for $branch: $MERGE_COMMITS"
         for commit in $MERGE_COMMITS; do
+            echo "Reverting merge commit: $commit"
             git revert -m 1 "$commit" --no-edit || {
                 echo "Conflict occurred while reverting merge commit $commit for $branch"
                 exit 1
@@ -75,10 +74,12 @@ for branch in $FAILED_BRANCHES; do
     else
         echo "No merge commit found for branch $branch. Searching for direct commits..."
         
-        DIRECT_COMMITS=$(git log --grep="$branch" --format="%H")
+        # Search for direct commits
+        DIRECT_COMMITS=$(git log --grep="Merge pull request.*from.*$branch" --format="%H")
         if [[ -n "$DIRECT_COMMITS" ]]; then
             echo "Found direct commits for $branch: $DIRECT_COMMITS"
             for commit in $DIRECT_COMMITS; do
+                echo "Reverting direct commit: $commit"
                 git revert "$commit" --no-edit || {
                     echo "Conflict occurred while reverting direct commit $commit for $branch"
                     exit 1
