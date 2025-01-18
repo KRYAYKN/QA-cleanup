@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # AccelQ API credentials
-API_TOKEN="_vEXPgyaqAxtXL7wbvzvooY49cnsIYYHrWQMJH-ZEM"
+API_TOKEN="_vEXPgyaqAxtXL7wbvzvooY49cnsIYYHrWQMJH-ZcEM"  # Updated token
 EXECUTION_ID="452413"
 USER_ID="koray.ayakin@pargesoft.com"
 
