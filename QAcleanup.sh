@@ -5,14 +5,35 @@ API_TOKEN="_vEXPgyaqAxtXL7wbvzvooY49cnsIYYHrWQMJH-ZEM"
 EXECUTION_ID="452413"
 USER_ID="koray.ayakin@pargesoft.com"
 
+MAX_RETRIES=5  # Maximum retry attempts for API call
+WAIT_TIME=10   # Wait time between retries (seconds)
+
 # Step 1: Fetch AccelQ Test Results
 echo "Fetching AccelQ test results..."
-curl -X GET "https://poc.accelq.io/awb/api/1.0/poc25/runs/${EXECUTION_ID}" \
-  -H "api_key: ${API_TOKEN}" \
-  -H "user_id: ${USER_ID}" \
-  -H "Content-Type: application/json" > accelq-results.json
+RETRIES=0
+SUCCESS=false
 
-echo "AccelQ test results saved to accelq-results.json"
+while [[ $RETRIES -lt $MAX_RETRIES ]]; do
+    HTTP_STATUS=$(curl -s -o accelq-results.json -w "%{http_code}" -X GET "https://poc.accelq.io/awb/api/1.0/poc25/runs/${EXECUTION_ID}" \
+      -H "api_key: ${API_TOKEN}" \
+      -H "user_id: ${USER_ID}" \
+      -H "Content-Type: application/json")
+    
+    if [[ $HTTP_STATUS -eq 200 && -s accelq-results.json ]]; then
+        echo "AccelQ test results fetched successfully."
+        SUCCESS=true
+        break
+    else
+        echo "Failed to fetch test results (HTTP Status: $HTTP_STATUS). Retrying in $WAIT_TIME seconds... ($((RETRIES + 1))/$MAX_RETRIES)"
+        sleep $WAIT_TIME
+        ((RETRIES++))
+    fi
+done
+
+if [[ $SUCCESS == false ]]; then
+    echo "Failed to fetch AccelQ test results after $MAX_RETRIES attempts. Exiting."
+    exit 1
+fi
 
 # Step 2: Identify Failed Branches
 echo "Identifying failed branches..."
