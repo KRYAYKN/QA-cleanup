@@ -60,10 +60,10 @@ for branch in $FAILED_BRANCHES; do
     
     # Debugging merge commits
     echo "Debugging merge commits for branch: $branch"
-    git log --merges --oneline --all --grep="Merge pull request.*$branch"
+    git log --merges --oneline --all --grep="Merge pull request.*from.*$branch"
     
     # Find merge commits
-    MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*$branch" --format="%H")
+    MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*from.*$branch" --format="%H")
     if [[ -n "$MERGE_COMMITS" ]]; then
         echo "Found merge commits for $branch: $MERGE_COMMITS"
         for commit in $MERGE_COMMITS; do
@@ -90,6 +90,7 @@ for branch in $FAILED_BRANCHES; do
         fi
     fi
 done
+
 
 
 
