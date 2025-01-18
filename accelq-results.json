@@ -1,0 +1,305 @@
+{
+    "summary": {
+        "jobPid": 452413,
+        "status": "completed",
+        "tagList": [],
+        "subStatus": "In progress",
+        "reasons": [],
+        "errors": [],
+        "pass": 1,
+        "fail": 3,
+        "notRun": 0,
+        "testcaseCount": 4,
+        "completedTimestamp": 1736927237109,
+        "lastUpdatedTimestamp": 0,
+        "testCaseSummaryList": [
+            {
+                "reportVersion": "3.3",
+                "id": 0,
+                "dbPid": 39162,
+                "scnPid": 88558,
+                "name": "Test case 1",
+                "status": "fail",
+                "lastStatusUpdatedUserName": "",
+                "lastErrorStmtMsg": "[Navigate to Related Entries Page] Element [label : Related Entries] is not found after waiting for: 30 seconds.",
+                "startDate": 1736926181705,
+                "endDate": 1736926595087,
+                "jobPid": 452413,
+                "extResultLink": "https://poc.accelq.io/#/forward?tenantCode=poc25&projectCode=SaintGobainMSDPOC&jobPid=452413&testTypePid=0&scnPid=88558&testCasePid=39162&isAccessAllTC=true",
+                "selfHealingCount": null,
+                "hostTimezone": "TRT",
+                "metadata": {
+                    "tags": [
+                        "feature/1"
+                    ]
+                }
+            },
+            {
+                "reportVersion": "3.3",
+                "id": 0,
+                "dbPid": 39190,
+                "scnPid": 88601,
+                "name": "Test case 1",
+                "status": "fail",
+                "lastStatusUpdatedUserName": "",
+                "lastErrorStmtMsg": "[Navigate to Related Entries Page] Element [label : Related Entries] is not found after waiting for: 30 seconds.",
+                "startDate": 1736926595747,
+                "endDate": 1736926998003,
+                "jobPid": 452413,
+                "extResultLink": "https://poc.accelq.io/#/forward?tenantCode=poc25&projectCode=SaintGobainMSDPOC&jobPid=452413&testTypePid=0&scnPid=88601&testCasePid=39190&isAccessAllTC=true",
+                "selfHealingCount": null,
+                "hostTimezone": "TRT",
+                "metadata": {
+                    "tags": [
+                        "feature/2"
+                    ]
+                }
+            },
+            {
+                "reportVersion": "3.3",
+                "id": 0,
+                "dbPid": 39191,
+                "scnPid": 88602,
+                "name": "Test case 1",
+                "status": "pass",
+                "lastStatusUpdatedUserName": "",
+                "lastErrorStmtMsg": "",
+                "startDate": 1736926999190,
+                "endDate": 1736927058190,
+                "jobPid": 452413,
+                "extResultLink": "https://poc.accelq.io/#/forward?tenantCode=poc25&projectCode=SaintGobainMSDPOC&jobPid=452413&testTypePid=0&scnPid=88602&testCasePid=39191&isAccessAllTC=true",
+                "selfHealingCount": null,
+                "hostTimezone": "TRT",
+                "metadata": {
+                    "tags": [
+                        "feature/3"
+                    ]
+                }
+            },
+            {
+                "reportVersion": "3.3",
+                "id": 0,
+                "dbPid": 39192,
+                "scnPid": 88603,
+                "name": "Test case 1",
+                "status": "fail",
+                "lastStatusUpdatedUserName": "",
+                "lastErrorStmtMsg": "[login] 'Element [label : Yes]' not found.",
+                "startDate": 1736927058748,
+                "endDate": 1736927236335,
+                "jobPid": 452413,
+                "extResultLink": "https://poc.accelq.io/#/forward?tenantCode=poc25&projectCode=SaintGobainMSDPOC&jobPid=452413&testTypePid=0&scnPid=88603&testCasePid=39192&isAccessAllTC=true",
+                "selfHealingCount": null,
+                "hostTimezone": "TRT",
+                "metadata": {
+                    "tags": [
+                        "feature/4"
+                    ]
+                }
+            }
+        ],
+        "reportVersion": "3.3",
+        "purpose": "Test Suite - QA-CleanupTS",
+        "testTypePid": 0,
+        "createdBy": "Koray Ayakin",
+        "startTimestamp": 1736926180361,
+        "tenantCode": "poc25",
+        "projectCode": "SaintGobainMSDPOC",
+        "datasetName": "Test",
+        "scnCount": 4,
+        "testSuiteName": "QA-CleanupTS",
+        "testSuitePid": 13696,
+        "scnName": "",
+        "hostConfig": {
+            "webProviderType": "Local Agent",
+            "mobileProviderType": "Local Agent",
+            "webConnectionParams": {},
+            "mobileConnectionParams": {},
+            "agentName": "kry",
+            "agentNamePattern": null,
+            "dynamicAgent": false,
+            "parallelExecution": false,
+            "numOfParallelRuns": 1,
+            "webAdditionalCapabilities": "{\n\"headless\": \"new\",\n  \"args\": [\n    \"--no-sandbox\",\n    \"--disable-dev-shm-usage\",\n    \"--disable-gpu\",\n    \"--ignore-certificate-errors\"\n\n  ]\n\n}",
+            "mobileAdditionalCapabilities": "",
+            "webDriverConfigName": "docker",
+            "mobileDriverConfigName": "",
+            "browserKeepAlive": false,
+            "mobileKeepAlive": true,
+            "skipReinstall": false,
+            "webPlatformDetails": {
+                "os": "Windows",
+                "osVersion": "",
+                "browser": "Chrome",
+                "browserVersion": "",
+                "isRealDevice": true,
+                "deviceStatus": 3,
+                "customDriverUrl": "http://127.0.0.1:4723/wd/hub",
+                "appiumDriverUrl": "http://127.0.0.1:4723/wd/hub"
+            },
+            "mobilePlatformDetails": null,
+            "mobilePlatformDetailsList": null,
+            "emulatedDeviceDetails": null,
+            "tcStmtLineMaxCount": 100000,
+            "autoStartBsLocal": true,
+            "webOsVersion": "",
+            "webBrowser": "Chrome",
+            "webBrowserVersion": "",
+            "webOs": "Windows"
+        },
+        "notifyOnStart": true,
+        "emailNotificationMode": 0,
+        "notificationEmailIds": "",
+        "debug": false,
+        "enableIframeFreeFormSearch": false,
+        "settings": {
+            "captureScreenshot": "1",
+            "enableSelfHealing": "true",
+            "pageLoadWaitTime": "60",
+            "elementWaitTime": "30",
+            "loggerLevel": "INFO",
+            "verbose": "false",
+            "enableWebAccessibilityTesting": "false",
+            "enableWebPerformanceTesting": "false",
+            "slaThreshold": "0",
+            "apiTimeout": "60"
+        },
+        "scenarioMetadataDef": {},
+        "testCaseMetadataDef": {},
+        "runConfig": {},
+        "executionParametersJson": "{}",
+        "bugsCount": 0,
+        "bugList": [],
+        "scenarioList": [
+            {
+                "name": "Demo_BC (different location handling)feature",
+                "description": "",
+                "dbPid": 88558,
+                "dataDriven": true,
+                "metadata": {},
+                "testCases": [],
+                "testCasesList": [
+                    {
+                        "pid": 39162,
+                        "name": "Test case 1"
+                    }
+                ],
+                "jiraStoryList": []
+            },
+            {
+                "name": "copy of Demo_BC (different location handling)feature2",
+                "description": "",
+                "dbPid": 88601,
+                "dataDriven": true,
+                "metadata": {},
+                "testCases": [],
+                "testCasesList": [
+                    {
+                        "pid": 39190,
+                        "name": "Test case 1"
+                    }
+                ],
+                "jiraStoryList": []
+            },
+            {
+                "name": "copy of Demo_BC (different location handling)feature3",
+                "description": "",
+                "dbPid": 88602,
+                "dataDriven": true,
+                "metadata": {},
+                "testCases": [],
+                "testCasesList": [
+                    {
+                        "pid": 39191,
+                        "name": "Test case 1"
+                    }
+                ],
+                "jiraStoryList": []
+            },
+            {
+                "name": "copy of Demo_BC (different location handling)feature4",
+                "description": "",
+                "dbPid": 88603,
+                "dataDriven": true,
+                "metadata": {},
+                "testCases": [],
+                "testCasesList": [
+                    {
+                        "pid": 39192,
+                        "name": "Test case 1"
+                    }
+                ],
+                "jiraStoryList": []
+            }
+        ],
+        "autoReRun": false,
+        "extResultUrl": "https://poc.accelq.io/#/forward?tenantCode=poc25&projectCode=SaintGobainMSDPOC&jobPid=452413&testTypePid=0",
+        "extResultUrlWithApiCode": "https://poc.accelq.io/#/forward?tenantCode=poc25&projectCode=SaintGobainMSDPOC&jobPid=452413&testTypePid=0&extApiCode=bCmqKIQARrOHWrj-sUMP3SUpQS3KpZKWXbwP6dc-2O4",
+        "extResultUrlPasscode": "SW91Q09lTkdoU2M="
+    },
+    "parentPid": null,
+    "childRunSummaryList": [
+        {
+            "jobPid": 452413,
+            "purpose": "Test Suite - QA-CleanupTS",
+            "startTimestamp": 1736926180361,
+            "datasetName": "Test",
+            "testSuiteName": "QA-CleanupTS",
+            "scnName": "",
+            "status": "completed",
+            "subStatus": "In progress",
+            "reasons": [],
+            "reasonsStr": "",
+            "pass": 1,
+            "fail": 3,
+            "notRun": 0,
+            "bugsCount": 0,
+            "completedTimestamp": 1736927237109,
+            "webPlatformDetails": "{\"os\":\"Windows\",\"osVersion\":\"\",\"browser\":\"Chrome\",\"browserVersion\":\"\",\"isRealDevice\":true,\"deviceStatus\":3,\"customDriverUrl\":\"http://127.0.0.1:4723/wd/hub\"}",
+            "createdBy": "Koray Ayakin",
+            "debug": false,
+            "autoReRun": false,
+            "testTypePid": 0,
+            "consolidated": true,
+            "hostConfig": {
+                "webProviderType": "Local Agent",
+                "mobileProviderType": "Local Agent",
+                "webConnectionParams": {},
+                "mobileConnectionParams": {},
+                "agentName": "kry",
+                "agentNamePattern": null,
+                "dynamicAgent": false,
+                "parallelExecution": false,
+                "numOfParallelRuns": 1,
+                "webAdditionalCapabilities": "{\n\"headless\": \"new\",\n  \"args\": [\n    \"--no-sandbox\",\n    \"--disable-dev-shm-usage\",\n    \"--disable-gpu\",\n    \"--ignore-certificate-errors\"\n\n  ]\n\n}",
+                "mobileAdditionalCapabilities": "",
+                "webDriverConfigName": "docker",
+                "mobileDriverConfigName": "",
+                "browserKeepAlive": false,
+                "mobileKeepAlive": true,
+                "skipReinstall": false,
+                "webPlatformDetails": {
+                    "os": "Windows",
+                    "osVersion": "",
+                    "browser": "Chrome",
+                    "browserVersion": "",
+                    "isRealDevice": true,
+                    "deviceStatus": 3,
+                    "customDriverUrl": "http://127.0.0.1:4723/wd/hub",
+                    "appiumDriverUrl": "http://127.0.0.1:4723/wd/hub"
+                },
+                "mobilePlatformDetails": null,
+                "mobilePlatformDetailsList": null,
+                "emulatedDeviceDetails": null,
+                "tcStmtLineMaxCount": 100000,
+                "autoStartBsLocal": true,
+                "webOsVersion": "",
+                "webBrowser": "Chrome",
+                "webBrowserVersion": "",
+                "webOs": "Windows"
+            }
+        }
+    ],
+    "testRunStoragePurgeInfo": null,
+    "reRunsCount": 0
+}
