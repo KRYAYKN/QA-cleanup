@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # AccelQ API credentials
-API_TOKEN="_vEXPgyaqAxtXL7wbvzvooY49cnsIYYHrWQMJH-ZEM"
+API_TOKEN="_vEXPgyaqAxtXL7wbvzvooY49cnsIYYHrWQMJH-ZcEM"
 EXECUTION_ID="452413"
 USER_ID="koray.ayakin@pargesoft.com"
 
-MAX_RETRIES=5  # Maximum retry attempts for API call
-WAIT_TIME=10   # Wait time between retries (seconds)
+MAX_RETRIES=5
+WAIT_TIME=10
 
 # Step 1: Fetch AccelQ Test Results
 echo "Fetching AccelQ test results..."
@@ -48,58 +48,64 @@ fi
 echo "Failed branches to revert: $FAILED_BRANCHES"
 
 # Step 3: Checkout QA Branch
-echo "Checking out QA branch..."
 git checkout qa || { echo "Failed to checkout QA branch"; exit 1; }
 git pull origin qa || { echo "Failed to pull latest QA branch"; exit 1; }
 
 # Step 4: Create temporary branch for reverting
-echo "Creating temporary branch for reverting operations..."
 git checkout -b temp_revert_branch || { echo "Failed to create temporary branch"; exit 1; }
 
-# Step 5: Find and revert merge commits from failed branches
+# Step 5: Find and revert merge commits or direct commits
 for branch in $FAILED_BRANCHES; do
     echo "Processing failed branch: $branch"
+
+    # Debugging merge commits
+    echo "Debugging git log for branch: $branch"
+    git log --merges --oneline --all --grep="$branch"
+
+    # Search for merge commits
+    echo "Searching for merge commits for $branch..."
+    MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*$branch" --format="%H")
     
-    # Find merge commit of this feature branch into QA
-    MERGE_COMMIT=$(git log --merges --grep="$branch" --format="%H")
-    
-    if [[ -n "$MERGE_COMMIT" ]]; then
-        echo "Found merge commit for $branch: $MERGE_COMMIT"
-        
-        # Create revert commit with descriptive message
-        git revert -m 1 "$MERGE_COMMIT" --no-edit || {
-            echo "Conflict occurred while reverting $branch"
-            echo "Please resolve conflicts manually and then continue"
-            exit 1
-        }
+    if [[ -n "$MERGE_COMMITS" ]]; then
+        echo "Found merge commits for $branch: $MERGE_COMMITS"
+        for commit in $MERGE_COMMITS; do
+            echo "Reverting merge commit: $commit"
+            git revert -m 1 "$commit" --no-edit || {
+                echo "Conflict occurred while reverting merge commit $commit for $branch. Attempting automatic resolution..."
+                git checkout --ours .
+                git add .
+                git revert --continue || {
+                    echo "Failed to resolve conflicts for merge commit $commit. Skipping..."
+                    git revert --abort
+                }
+            }
+        done
     else
-        echo "No merge commit found for branch $branch"
-        # Look for direct commits if no merge commit found
-        DIRECT_COMMITS=$(git log --grep="$branch" --format="%H")
+        echo "No merge commit found for branch $branch. Searching for direct commits..."
+        
+        # Search for direct commits
+        DIRECT_COMMITS=$(git log --oneline --all --grep="$branch" --format="%H")
         if [[ -n "$DIRECT_COMMITS" ]]; then
-            echo "Found direct commits for $branch"
+            echo "Found direct commits for $branch: $DIRECT_COMMITS"
             for commit in $DIRECT_COMMITS; do
+                echo "Reverting direct commit: $commit"
                 git revert "$commit" --no-edit || {
-                    echo "Conflict occurred while reverting commit $commit"
-                    echo "Please resolve conflicts manually and then continue"
-                    exit 1
+                    echo "Conflict occurred while reverting direct commit $commit for $branch. Skipping..."
+                    git revert --abort
                 }
             done
+        else
+            echo "No commits found for branch $branch."
         fi
     fi
 done
 
-# Step 6: If all reverts successful, update QA branch
-echo "Updating QA branch..."
+
+# Step 6: Update QA branch
 git checkout qa
-git merge temp_revert_branch || { 
-    echo "Failed to merge revert changes into QA"
-    echo "Please resolve any conflicts and merge manually"
-    exit 1
-}
+git merge temp_revert_branch || { echo "Failed to merge revert changes into QA"; exit 1; }
 
 # Step 7: Push changes
-echo "Pushing changes to remote..."
 git push origin qa || { echo "Failed to push to QA branch"; exit 1; }
 
 # Cleanup
