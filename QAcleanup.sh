@@ -56,32 +56,33 @@ git checkout -b temp_revert_branch || { echo "Failed to create temporary branch"
 
 # Step 5: Find and revert merge commits or direct commits
 for branch in $FAILED_BRANCHES; do
-    echo "Processing failed branch: $branch"
+    echo "Processing branch: '$branch'"
     
-    # Debug merge commits
-    echo "Searching for merge commits for $branch..."
-    git log --merges --oneline --grep="$branch"
-
+    # Debugging merge commits
+    echo "Debugging merge commits for branch: $branch"
+    git log --merges --oneline --all --grep="$branch"
+    
     # Find merge commits
-    MERGE_COMMITS=$(git log --merges --oneline --grep="Merge pull request.*$branch" --format="%H")
+    MERGE_COMMITS=$(git log --merges --oneline --all --grep="$branch" --format="%H")
     if [[ -n "$MERGE_COMMITS" ]]; then
         echo "Found merge commits for $branch: $MERGE_COMMITS"
         for commit in $MERGE_COMMITS; do
+            echo "Reverting merge commit: $commit"
             git revert -m 1 "$commit" --no-edit || {
-                echo "Conflict occurred while reverting merge commit $commit for $branch"
-                exit 1
+                echo "Conflict occurred while reverting merge commit $commit for $branch. Skipping..."
+                git revert --abort
             }
         done
     else
         echo "No merge commit found for branch $branch. Searching for direct commits..."
-        
-        DIRECT_COMMITS=$(git log --grep="$branch" --format="%H")
+        DIRECT_COMMITS=$(git log --oneline --all --grep="$branch" --format="%H")
         if [[ -n "$DIRECT_COMMITS" ]]; then
             echo "Found direct commits for $branch: $DIRECT_COMMITS"
             for commit in $DIRECT_COMMITS; do
+                echo "Reverting direct commit: $commit"
                 git revert "$commit" --no-edit || {
-                    echo "Conflict occurred while reverting direct commit $commit for $branch"
-                    exit 1
+                    echo "Conflict occurred while reverting direct commit $commit for $branch. Skipping..."
+                    git revert --abort
                 }
             done
         else
@@ -89,6 +90,7 @@ for branch in $FAILED_BRANCHES; do
         fi
     fi
 done
+
 
 # Step 6: Update QA branch
 git checkout qa
