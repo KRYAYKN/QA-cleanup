@@ -13,6 +13,7 @@ curl -X GET "https://poc.accelq.io/awb/api/1.0/poc25/runs/${EXECUTION_ID}" \
   -H "Content-Type: application/json" > accelq-results.json
 echo "AccelQ test results saved to accelq-results.json"
 
+# Step 2: Identify Failed Branches
 echo "Identifying failed branches..."
 FAILED_BRANCHES=$(jq -r '.summary.testCaseSummaryList[] | select(.status == "fail") | .metadata.tags[]' accelq-results.json | sort | uniq)
 
@@ -24,6 +25,24 @@ fi
 
 echo "Failed branches to revert: $FAILED_BRANCHES"
 
-   MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*from.*$branch" --format="%H")
+# Step 3: Find Merge Commits for Failed Branches
+echo "Finding merge commits for failed branches..."
+for branch in $FAILED_BRANCHES; do
+    branch=$(echo "$branch" | xargs)  # Trim spaces
+    echo "Processing branch: '$branch'"
+    
+    # Search for merge commits related to the current branch
+    MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*from.*$branch" --format="%H")
+    
+    if [[ -n "$MERGE_COMMITS" ]]; then
+        echo "Merge commits for branch '$branch':"
+        echo "$MERGE_COMMITS"
+    else
+        echo "No merge commits found for branch '$branch'."
+    fi
+done
 
-   echo "MERGE COMMİTS: $MERGE_COMMITS"
+# Cleanup
+rm -f accelq-results.json
+
+echo "Completed processing failed branches."
