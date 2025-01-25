@@ -51,30 +51,20 @@ echo "Failed branches to revert: $FAILED_BRANCHES"
 git checkout qa || { echo "Failed to checkout QA branch"; exit 1; }
 git pull origin qa || { echo "Failed to pull latest QA branch"; exit 1; }
 
-# Step 4: Create temporary branch for reverting
-#git checkout -b temp_revert_branch || { echo "Failed to create temporary branch"; exit 1; }
-
-# Step 5: Find and revert merge commits or direct commits
+# Step 4: Find Merge Commits in QA Branch
 for branch in $FAILED_BRANCHES; do
     echo "Processing failed branch: $branch"
-    
-    # Debug merge commits
-    echo "Searching for merge commits for $branch..."
-    git log --merges --oneline --grep="$branch"
 
-    # Find merge commits
-    MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*from.*$branch" --format="%H")
-
-  
+    # Find merge commits related to this branch in the QA branch
+    MERGE_COMMITS=$(git log qa --merges --grep="Merge pull request.*from.*$branch" --format="%H")
 
     if [[ -n "$MERGE_COMMITS" ]]; then
-        echo "Found merge commits for branch '$branch':"
+        echo "Found merge commits for branch '$branch' in QA:"
         echo "$MERGE_COMMITS"
-        
-
     else
-        echo "No merge commits found for branch '$branch'."
+        echo "No merge commits found for branch '$branch' in QA."
     fi
 done
 
- 
+# Cleanup
+rm -f accelq-results.json
