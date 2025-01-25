@@ -2,7 +2,7 @@
 
 # AccelQ API credentials
 API_TOKEN="_vEXPgyaqAxtXL7wbvzvooY49cnsIYYHrWQMJH-ZcEM"
-EXECUTION_ID="452413"
+EXECUTION_ID="452922"
 USER_ID="koray.ayakin@pargesoft.com"
 
 # Step 1: Fetch AccelQ Test Results
