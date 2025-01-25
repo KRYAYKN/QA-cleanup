@@ -84,4 +84,4 @@ for branch in $FAILED_BRANCHES; do
     fi
 done
 
- echo "failed branches commits: $MERGE_COMMİTS"
+ echo "failed branches commits: $MERGE_COMMITS"
