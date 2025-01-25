@@ -65,4 +65,23 @@ for branch in $FAILED_BRANCHES; do
     # Find merge commits
     MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*from.*$branch" --format="%H")
 
-    echo "failed branches commits: $MERGE_COMMİTS"
+   
+
+    if [[ -n "$MERGE_COMMITS" ]]; then
+        echo "Found merge commits for branch '$branch':"
+        echo "$MERGE_COMMITS"
+        
+        # Reset to the parent of each merge commit
+        for commit in $MERGE_COMMITS; do
+            echo "Resetting merge commit: $commit"
+            git reset --hard $(git rev-parse $commit^) || {
+                echo "Failed to reset merge commit $commit. Please resolve manually."
+                exit 1
+            }
+        done
+    else
+        echo "No merge commits found for branch '$branch'."
+    fi
+done
+
+ echo "failed branches commits: $MERGE_COMMİTS"
