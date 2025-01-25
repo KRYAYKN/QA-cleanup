@@ -64,3 +64,5 @@ for branch in $FAILED_BRANCHES; do
 
     # Find merge commits
     MERGE_COMMITS=$(git log --merges --oneline --all --grep="Merge pull request.*from.*$branch" --format="%H")
+
+    echo "failed branches commits: $MERGE_COMMİTS"
