@@ -52,7 +52,7 @@ git checkout qa || { echo "Failed to checkout QA branch"; exit 1; }
 git pull origin qa || { echo "Failed to pull latest QA branch"; exit 1; }
 
 # Step 4: Create temporary branch for reverting
-git checkout -b temp_revert_branch || { echo "Failed to create temporary branch"; exit 1; }
+#git checkout -b temp_revert_branch || { echo "Failed to create temporary branch"; exit 1; }
 
 # Step 5: Find and revert merge commits or direct commits
 for branch in $FAILED_BRANCHES; do
